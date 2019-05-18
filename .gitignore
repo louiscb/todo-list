@@ -1,0 +1,13 @@
+# node ignore
+logs
+*.log
+.npm
+node_modules/
+npm-debug.log
+
+# intelliJ ignore
+
+out/
+.idea/
+todo-list.iml
+
