@@ -5,9 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//database
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/todo-list');
 
+//routes
+var indexRouter = require('./routes/index');
+var todosRouter = require('./routes/todos');
+
+//init the server object
 var app = express();
 
 // view engine setup
@@ -26,8 +33,15 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//assign the database object to the incoming http request
+app.use(function(req, res, next) {
+    req.db = db;
+    next();
+});
+
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/todos', todosRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
