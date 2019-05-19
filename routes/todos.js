@@ -88,7 +88,7 @@ router.get('/done', function(req, res, next) {
     });
 });
 
-/* GET done todos */
+/* GET not done todos */
 router.get('/not-done', function(req, res, next) {
     var db = req.db;
     var collection = db.get(collectionName);
