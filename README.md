@@ -22,6 +22,10 @@ Then run `npm install` to install all the appropriate packages.
 
 Once everything is installed run `npm start` or `nodemon start` to begin the application. Then navigate to `localhost:3000` to use the application.
 
+## How to test
+
+To test type `npm test`. The app will run through several tests for the RESTful API.
+
 ## Logging
 
 This application uses [Winston](https://github.com/winstonjs/winston) for the logging. Logs appear in the `logs/app.log` file. The verboseness of the logs and amount can be configured in the `config/winston.js` file.
