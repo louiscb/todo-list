@@ -1,16 +1,17 @@
 extends layout
 
 block content
-  h1 To-do list
-  button#btnListDoneTodos List done todos
+  h1 to-do list
+  #wrapper
 
-  #createTodo
-      fieldset
-        textarea#inputTitle(type='text', placeholder='Title' cols='50' rows='1')
-        br
-        button#btnCreateTodo Create todo
-  #doneTodos
+    h2 completed
+    button#btnListDoneTodos show
 
-  #todos
+    #doneTodos
+
+    h2 uncompleted
+    #todos
+
+
 
 
