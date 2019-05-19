@@ -2,25 +2,26 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../app');
 let should = chai.should();
+let expect = require('chai').expect;
 
 chai.use(chaiHttp);
 
-let todoId;
+let todo = {};
 
 describe('/POST todo', () => {
     it('should POST a new todo', (done) => {
-        let todo = {
+        let newTodo = {
             'title' : 'test'
         };
 
         chai.request(server)
             .post('/todos/create')
-            .send(todo)
+            .send(newTodo)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.msg.should.be.eql('success');
                 res.body.should.have.property('link');
-                todoId = res.body.link;
+                todo._id = res.body.link;
                 done();
             })
     });
@@ -30,28 +31,27 @@ describe('/GET todo', () => {
     it('should GET the requested todo', (done) => {
 
         chai.request(server)
-            .get('/todos/' + todoId)
+            .get('/todos/' + todo._id)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.have.property('title');
                 res.body.should.have.property('timeStamp');
                 res.body.should.have.property('done');
+                todo = res.body;
                 done();
             })
     });
 });
 
 
-describe('/GET all todo', () => {
+describe('/GET all todos', () => {
     it('should GET all the todos', (done) => {
 
         chai.request(server)
             .get('/todos')
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body[0].should.have.property('title');
-                res.body[0].should.have.property('timeStamp');
-                res.body[0].should.have.property('done');
+                expect(res.body).to.deep.include(todo);
                 done();
             })
     });
@@ -59,12 +59,11 @@ describe('/GET all todo', () => {
 
 describe('/GET not done todos', () => {
     it('should GET all the not done todos', (done) => {
-
         chai.request(server)
             .get('/todos/not-done')
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.deep.should.include({_id : todoId});
+                expect(res.body).to.deep.include(todo);
                 done();
             })
     });
@@ -72,18 +71,14 @@ describe('/GET not done todos', () => {
 
 describe('/UPDATE todo', () => {
     it('should UPDATE the requested todo', (done) => {
-        let todo = {
-            'done' : true
-        };
+        todo.done = true;
 
         chai.request(server)
-            .post('/todos/' + todoId)
+            .post('/todos/' + todo._id)
             .send(todo)
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.have.property('title');
-                res.body.should.have.property('timeStamp');
-                res.body.should.have.property('done');
+                res.body.msg.should.be.eql('success');
                 done();
             })
     });
@@ -96,7 +91,7 @@ describe('/GET done todos', () => {
             .get('/todos/done')
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.deep.should.include({_id : 12});
+                expect(res.body).to.deep.include(todo);
                 done();
             })
     });
@@ -106,7 +101,7 @@ describe('/DELETE todo', () => {
     it('should DELETE the requested todo', (done) => {
 
         chai.request(server)
-            .delete('/todos/' + todoId)
+            .delete('/todos/' + todo._id)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.msg.should.be.eql('success');
