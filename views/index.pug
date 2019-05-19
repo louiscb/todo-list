@@ -1,5 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 To-do list
+  button#btnListDoneTodos List done todos
+
+  #createTodo
+      fieldset
+        textarea#inputTitle(type='text', placeholder='Title' cols='50' rows='1')
+        br
+        button#btnCreateTodo Create todo
+  #doneTodos
+
+  #todos
+
+

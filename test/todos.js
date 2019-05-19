@@ -20,8 +20,8 @@ describe('/POST todo', () => {
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.msg.should.be.eql('success');
-                res.body.should.have.property('link');
-                todo._id = res.body.link;
+                res.body.should.have.property('todo');
+                todo._id = res.body.todo._id;
                 done();
             })
     });

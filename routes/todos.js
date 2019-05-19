@@ -12,7 +12,7 @@ router.post('/create', function(req, res, next) {
 
     collection.insert(req.body, function(err, result) {
         res.send(
-            (err === null) ? { msg: 'success', link: result._id } : { msg: err }
+            (err === null) ? { msg : 'success', "todo" : result} : { msg: err }
         );
     });
 });
@@ -25,11 +25,26 @@ router.post('/:id', function(req, res, next) {
     let id = req.params.id;
 
     // set isn't properly working, gets rid of values if they're not there
-    collection.update({_id: id}, { $set: {title: req.body.title, done: req.body.done}}, function (err, todo) {
+    collection.update({_id: id}, { $set: {title: req.body.title,}}, function (err, todo) {
         res.send((err == null) ? {msg: 'success'} : {msg: err});
     });
 });
 
+/* UPDATE a to-do entry */
+router.post('/:id/toggle-done', function(req, res, next) {
+    var db = req.db;
+    var collection = db.get(collectionName);
+    let id = req.params.id;
+
+    // set isn't properly working, gets rid of values if they're not there
+    collection.findOne({_id :id }, function(e, newTodo) {
+        let newDone = !newTodo.done;
+
+        collection.update({_id: id}, {$set: {done: newDone}}, function (err, todo) {
+            res.send((err == null) ? {msg: 'success'} : {msg: err});
+        });
+    });
+});
 
 /* DELETE a to-do entry */
 router.delete('/:id', function(req, res, next) {
