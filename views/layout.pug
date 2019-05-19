@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:300,400,500")
+    title= title
+
+
+  body
+    block content
+    script(src='/javascripts/global.js')
+
+
+#createTodo
+    input#inputTitle(type='text', placeholder='Title' cols='50' rows='1')
+
+    button#btnCreateTodo ADD
+
