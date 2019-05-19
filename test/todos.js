@@ -74,8 +74,7 @@ describe('/UPDATE todo', () => {
         todo.done = true;
 
         chai.request(server)
-            .post('/todos/' + todo._id)
-            .send(todo)
+            .post('/todos/' + todo._id + '/toggle-done')
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.msg.should.be.eql('success');
@@ -86,7 +85,6 @@ describe('/UPDATE todo', () => {
 
 describe('/GET done todos', () => {
     it('should GET all the done todos', (done) => {
-
         chai.request(server)
             .get('/todos/done')
             .end((err, res) => {
