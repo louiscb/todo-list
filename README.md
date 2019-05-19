@@ -6,7 +6,7 @@ This is a straight forward to-do list app.
 
 The app requires node, npm and mongoDB.
 
-You can node and npm [here](https://www.npmjs.com/get-npm).
+You can install node and npm [here](https://www.npmjs.com/get-npm).
 
 Install mongoDB [here](https://docs.mongodb.com/manual/installation/)
 
