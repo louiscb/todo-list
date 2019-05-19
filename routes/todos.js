@@ -24,7 +24,7 @@ router.post('/:id', function(req, res, next) {
     var collection = db.get(collectionName);
     let id = req.params.id;
 
-    // set isn't properly working, gets rid of valuues if they're not there
+    // set isn't properly working, gets rid of values if they're not there
     collection.update({_id: id}, { $set: {title: req.body.title, done: req.body.done}}, function (err, todo) {
         res.send((err == null) ? {msg: 'success'} : {msg: err});
     });
